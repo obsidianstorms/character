@@ -15,3 +15,6 @@ git config gitflow.hotfix.finish.keep FALSE
 git config gitflow.release.start.fetch TRUE
 git config gitflow.release.finish.fetch TRUE
 git config gitflow.release.finish.keep FALSE
+
+# git config --local user.name "Different Name"
+# git config --local user.email "Different Email"

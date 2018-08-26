@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Game Sessions{% endblock %}</h1>
+    {% if g.user %}
+        <a class="action" href="{{ url_for('game.create') }}">New</a>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% for gs in game_sessions %}
+        <article class="game">
+            <header>
+                <div>
+                    <h2>{{ gs['adventure_name'] }} - {{ gs['adventure_code'] }} - #{{ gs['session_number'] }} - {{ gs['play_date'] }}</h2>
+                    <div class="about">by {{ gs['username'] }} on {{ gs['created'].strftime('%Y-%m-%d') }}</div>
+                    <div class="about">GM: {{ gs['gm_name'] }} {{ gs['gm_dci'] }}</div>
+                    <div class="advancement">
+                        <h3>Experience</h3>
+                        <span>XP: {{ gs['experience'] }}</span>
+                        <span>T1AP: {{ gs['tier1_ap'] }}</span>
+                        <span>T2AP: {{ gs['tier2_ap'] }}</span>
+                        <span>T3AP: {{ gs['tier3_ap'] }}</span>
+                        <span>T4AP: {{ gs['tier4_ap'] }}</span>
+                        <span>Renown: {{ gs['renown'] }}</span>
+                        <span>Downtime: {{ gs['downtime'] }}</span>
+                    </div>
+                    <div class="treasure">
+                        <h3>Treasure</h3>
+                        <span>{{ gs['gold'] }}gp</span>
+                        <span>Magic Items: {{ gs['magic_count'] }}</span>
+                        <span>T1TP: {{ gs['tier1_tp'] }}</span>
+                        <span>T2TP: {{ gs['tier2_tp'] }}</span>
+                        <span>T3TP: {{ gs['tier3_tp'] }}</span>
+                        <span>T4TP: {{ gs['tier4_tp'] }}</span>
+                    </div>
+                    <div class="notes">
+                        <h3>Story Awards</h3>
+                        <div>{{ gs['story_awards'] }}</div>
+                        <h3>Acquired Items</h3>
+                        <div>{{ gs['acquired_items'] }}</div>
+                        <h3>Removed Items</h3>
+                        <div>{{ gs['removed_items'] }}</div>
+                        <h3>Downtime Activity</h3>
+                        <div>{{ gs['downtime_activity'] }}</div>
+                        <h3>Additional Notes</h3>
+                        <div>{{ gs['notes'] }}</div>
+                    </div>
+                </div>
+                {% if g.user['id'] == gs['player_id'] %}
+                    <a class="action" href="{{ url_for('game.update', id=gs['id']) }}">Edit</a>
+                {% endif %}
+            </header>
+            <p></p>
+        </article>
+        {% if not loop.last %}
+            <hr>
+        {% endif %}
+    {% endfor %}
+{% endblock %}

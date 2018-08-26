@@ -1,6 +1,14 @@
 #!/usr/bin/env bash
 
 echo '-----------------------------------------------'
+echo 'Setting up python...'
+echo '-----------------------------------------------'
+
+python3 -m venv "pyenv"
+source pyenv/bin/activate
+pip install -r requirements.txt
+
+echo '-----------------------------------------------'
 echo 'Setting up gitflow...'
 echo '-----------------------------------------------'
 git flow init -d

@@ -1,0 +1,114 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <h1>{% block title %}Edit Game Session{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <div class="adventure">
+            <div class="name">
+                <label for="adventure_name">Adventure Name</label>
+                <input name="adventure_name" id="adventure_name" 
+                       value="{{ request.form['adventure_name'] or gs['adventure_name'] }}" required>
+            </div>
+            <div class="code">
+                <label for="adventure_code">Adventure Code</label>
+                <input name="adventure_code" id="adventure_code" 
+                       value="{{ request.form['adventure_code'] or gs['adventure_code'] }}">
+            </div>
+            <div class="session">
+                <label for="session_number">Session Number</label>
+                <input name="session_number" id="session_number" 
+                       value="{{ request.form['session_number'] or gs['session_number'] }}">
+            </div>
+            <div class="date">
+                <label for="play_date">Adventure Date</label>
+                <input name="play_date" id="play_date" 
+                       value="{{ request.form['play_date'] or gs['play_date'] }}">
+            </div>
+        </div>
+        <div class="master">
+            <label for="gm_name">GM Name</label>
+            <input name="gm_name" id="gm_name" 
+                   value="{{ request.form['gm_name'] or gs['gm_name'] }}">
+            <label for="gm_dci">GM DCI</label>
+            <input name="gm_dci" id="gm_dci" 
+                   value="{{ request.form['gm_dci'] or gs['gm_dci'] }}">
+        </div>
+        <div class="reward">
+            <h2>Character Advancement</h2>
+            <label for="experience">Experience</label>
+            <input name="experience" id="experience" 
+                   value="{{ request.form['experience'] or gs['experience'] }}">
+            <label for="tier1_ap">AP T1</label>
+            <input name="tier1_ap" id="tier1_ap" 
+                   value="{{ request.form['tier1_ap'] or gs['tier1_ap'] }}">
+            <label for="tier2_ap">AP T2</label>
+            <input name="tier2_ap" id="tier2_ap" 
+                   value="{{ request.form['tier2_ap'] or gs['tier2_ap'] }}">
+            <label for="tier3_ap">AP T3</label>
+            <input name="tier3_ap" id="tier3_ap" 
+                   value="{{ request.form['tier3_ap'] or gs['tier3_ap'] }}">
+            <label for="tier4_ap">AP T4</label>
+            <input name="tier4_ap" id="tier4_ap" 
+                   value="{{ request.form['tier4_ap'] or gs['tier4_ap'] }}">
+        </div>
+        <div class="reward">
+            <h2>Treasure</h2>
+            <div>
+                <label for="gold">Gold</label>
+                <input name="gold" id="gold" value="{{ request.form['gold'] or gs['gold'] }}">
+                <label for="magic_count">Magic Items</label>
+                <input name="magic_count" id="magic_count" 
+                       value="{{ request.form['magic_count'] or gs['magic_count'] }}">
+            </div>
+            <div>
+                <label for="tier1_tp">TP T1</label>
+                <input name="tier1_tp" id="tier1_tp" 
+                       value="{{ request.form['tier1_tp'] or gs['tier1_tp'] }}">
+                <label for="tier2_tp">TP T1</label>
+                <input name="tier2_tp" id="tier2_tp" 
+                       value="{{ request.form['tier2_tp'] or gs['tier2_tp'] }}">
+                <label for="tier3_tp">TP T1</label>
+                <input name="tier3_tp" id="tier3_tp" 
+                       value="{{ request.form['tier3_tp'] or gs['tier3_tp'] }}">
+                <label for="tier4_tp">TP T1</label>
+                <input name="tier4_tp" id="tier4_tp" 
+                       value="{{ request.form['tier4_tp'] or gs['tier4_tp'] }}">
+            </div>
+        </div>
+        <div class="reward">
+            <h2>Life</h2>
+            <label for="renown">Renown</label>
+            <input name="renown" id="renown" 
+                   value="{{ request.form['renown'] or gs['renown'] }}">
+            <label for="downtime">Downtime</label>
+            <input name="downtime" id="downtime" 
+                   value="{{ request.form['downtime'] or gs['downtime'] }}">
+        </div>
+        <div class="notes">
+            <label for="story_awards">Story Awards</label>
+            <textarea name="story_awards" id="story_awards"
+                >{{ request.form['story_awards'] or gs['story_awards'] }}</textarea>
+            <label for="acquired_items">Acquired Items</label>
+            <textarea name="acquired_items" id="acquired_items"
+                >{{ request.form['acquired_items'] or gs['acquired_items'] }}</textarea>
+            <label for="removed_items">Removed Items</label>
+            <textarea name="removed_items" id="removed_items"
+                >{{ request.form['removed_items'] or gs['removed_items'] }}</textarea>
+            <label for="downtime_activity">Downtime Activity</label>
+            <textarea name="downtime_activity" id="downtime_activity"
+                >{{ request.form['downtime_activity'] or gs['downtime_activity'] }}</textarea>
+            <label for="notes">Additional Notes</label>
+            <textarea name="notes" id="notes"
+                >{{ request.form['notes'] or gs['notes'] }}</textarea>
+        </div>
+
+        <input type="submit" value="Save">
+    </form>
+    <hr>
+    <form action="{{ url_for('game.delete', id=gs['id']) }}" method="post">
+        <input class="danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">
+    </form>
+{% endblock %}

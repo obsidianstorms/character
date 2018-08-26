@@ -1,0 +1,21 @@
+{
+  "name": "character",
+  "version": "0.0.1",
+  "description": "Character Management",
+  "author": "Rick Yust <flintweather@gmail.com>",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "git://github.net/obsidianstorms/character"
+  },
+  "config": {
+    "pyup": "source pyenv/bin/activate",
+    "pydown": "deactivate"
+  },
+  "scripts": {
+    "update": "pip install -r requirements.txt",
+    "app:dev": "$npm_package_config_pyup && cd app && export FLASK_APP=flaskr && export FLASK_ENV=development",
+    "app:init": "$npm_package_config_pyup && cd app && export FLASK_APP=flaskr && export FLASK_ENV=development && echo 'Creating database...' && flask init-db",
+    "app:run": "$npm_package_config_pyup && cd app && export FLASK_APP=flaskr && export FLASK_ENV=development && flask run"
+  }
+}

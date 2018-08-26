@@ -1,15 +1,27 @@
 <!doctype html>
 <head>
-    <title>{% block title %}{% endblock %} - Character</title>
+    <title>
+        {% block title %}
+        {% endblock %}
+        {% if g.user %}
+            - {{ g.user['username'] }}
+        {% else %}
+            - Character
+        {% endif %}
+    </title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='character.css') }}">
+    <link rel="stylesheet" media="print" href="{{ url_for('static', filename='print.css') }}">
 </head>
 <body>
     <nav>
-        <h1>Character</h1>
+        {% if g.user %}
+            <h1>{{ g.user['username'] }}</h1>
+        {% else %}
+            <h1>Character</h1>
+        {% endif %}
         <ul>
             {% if g.user %}
-                <li><span>{{ g.user['username'] }}</span></li>
                 <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
             {% else %}
                 <li><a href="{{ url_for('auth.register') }}">Register</a></li>

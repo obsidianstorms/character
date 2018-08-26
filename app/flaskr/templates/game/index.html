@@ -8,43 +8,70 @@
 {% endblock %}
 
 {% block content %}
+    <div class="totals">
+        <span>XP: {{ totals['experience'] }}</span>
+        <span>AP: {{ totals['ap'] }}</span>
+        <span>Gold: {% print("%.2f" % totals['gold']) %}</span>
+        <span>TP1: {{ totals['tp1'] }}</span>
+        <span>TP2: {{ totals['tp2'] }}</span>
+        <span>TP3: {{ totals['tp3'] }}</span>
+        <span>TP4: {{ totals['tp4'] }}</span>
+        <span>DT: {{ totals['downtime'] }}</span>
+        <span>Items: {{ totals['magic_count'] }}</span>
+        <span>Renown: {{ totals['renown'] }}</span>
+    </div>
+    <hr>
     {% for gs in game_sessions %}
         <article class="game">
             <header>
                 <div>
                     <h2>{{ gs['adventure_name'] }} - {{ gs['adventure_code'] }} - #{{ gs['session_number'] }} - {{ gs['play_date'] }}</h2>
-                    <div class="about">by {{ gs['username'] }} on {{ gs['created'].strftime('%Y-%m-%d') }}</div>
-                    <div class="about">GM: {{ gs['gm_name'] }} {{ gs['gm_dci'] }}</div>
-                    <div class="advancement">
-                        <h3>Experience</h3>
-                        <span>XP: {{ gs['experience'] }}</span>
-                        <span>T1AP: {{ gs['tier1_ap'] }}</span>
-                        <span>T2AP: {{ gs['tier2_ap'] }}</span>
-                        <span>T3AP: {{ gs['tier3_ap'] }}</span>
-                        <span>T4AP: {{ gs['tier4_ap'] }}</span>
-                        <span>Renown: {{ gs['renown'] }}</span>
-                        <span>Downtime: {{ gs['downtime'] }}</span>
-                    </div>
-                    <div class="treasure">
-                        <h3>Treasure</h3>
-                        <span>{{ gs['gold'] }}gp</span>
-                        <span>Magic Items: {{ gs['magic_count'] }}</span>
-                        <span>T1TP: {{ gs['tier1_tp'] }}</span>
-                        <span>T2TP: {{ gs['tier2_tp'] }}</span>
-                        <span>T3TP: {{ gs['tier3_tp'] }}</span>
-                        <span>T4TP: {{ gs['tier4_tp'] }}</span>
+                    <div class="about">with (GM) {{ gs['gm_name'] }} {{ gs['gm_dci'] }}</div>
+                    <div class="stats">
+                        <div class="advancement">
+                            <h3>Experience</h3>
+                            <div>
+                                <span>XP: {{ gs['experience'] }}</span>
+                                <span>AP: {{ gs['tier1_ap'] }}</span>
+                                <span>DT: {{ gs['downtime'] }}</span>
+                                <span>Renown: {{ gs['renown'] }}</span>
+                            </div>
+                        </div>
+                        <div class="treasure">
+                            <h3>Treasure</h3>
+                            <div>
+                                <span>{% print("%.2f" % gs['gold']) %}gp</span>
+                                <span>Magic Items: {{ gs['magic_count'] }}</span>
+                            </div>
+                            <div>
+                                <span>T1TP: {{ gs['tier1_tp'] }}</span>
+                                <span>T2TP: {{ gs['tier2_tp'] }}</span>
+                                <span>T3TP: {{ gs['tier3_tp'] }}</span>
+                                <span>T4TP: {{ gs['tier4_tp'] }}</span>
+                            </div>
+                        </div>
                     </div>
                     <div class="notes">
-                        <h3>Story Awards</h3>
-                        <div>{{ gs['story_awards'] }}</div>
-                        <h3>Acquired Items</h3>
-                        <div>{{ gs['acquired_items'] }}</div>
-                        <h3>Removed Items</h3>
-                        <div>{{ gs['removed_items'] }}</div>
-                        <h3>Downtime Activity</h3>
-                        <div>{{ gs['downtime_activity'] }}</div>
-                        <h3>Additional Notes</h3>
-                        <div>{{ gs['notes'] }}</div>
+                        {% if gs['story_awards'] != '' %}
+                            <h3>Story Awards</h3>
+                            <div>{{ gs['story_awards'] }}</div>
+                        {% endif %}
+                        {% if gs['acquired_items'] != '' %}
+                            <h3>Acquired Items</h3>
+                            <div>{{ gs['acquired_items'] }}</div>
+                        {% endif %}
+                        {% if gs['removed_items'] != '' %}
+                            <h3>Removed Items</h3>
+                            <div>{{ gs['removed_items'] }}</div>
+                        {% endif %}
+                        {% if gs['downtime_activity'] != '' %}
+                            <h3>Downtime Activity</h3>
+                            <div>{{ gs['downtime_activity'] }}</div>
+                        {% endif %}
+                        {% if gs['notes'] != '' %}
+                            <h3>Additional Notes</h3>
+                            <div>{{ gs['notes'] }}</div>
+                        {% endif %}
                     </div>
                 </div>
                 {% if g.user['id'] == gs['player_id'] %}

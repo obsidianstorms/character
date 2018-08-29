@@ -109,7 +109,7 @@ CHAR_ADV = {
         "xp": 355000,
         "apt": 136,
         "ap_next": 8
-    },
+    }
 }
 
 
@@ -127,19 +127,10 @@ def __get_int(value):
         return 0
 
 
-@bp.route('/')
+@bp.route('/game')
 def index():
-    db = get_db()
-    game_sessions = db.execute(
-        'SELECT g.id, u.username,'
-        ' player_id, created, play_date, adventure_name, adventure_code, session_number, gm_name, gm_dci,'
-        ' experience, tier1_ap, tier2_ap, tier3_ap, tier4_ap,'
-        ' gold, magic_count, tier1_tp, tier2_tp, tier3_tp, tier4_tp,'
-        ' renown, downtime,'
-        ' story_awards, acquired_items, removed_items, downtime_activity, notes'
-        ' FROM game g JOIN user u ON g.player_id = u.id'
-        ' ORDER BY created ASC'
-    ).fetchall()
+    if g.user is None:
+        return render_template('game/index.html')
 
     totals = {
         "experience": 0,
@@ -153,6 +144,21 @@ def index():
         "downtime": 0,
         "renown": 0
     }
+
+    db = get_db()
+    game_sessions = db.execute(
+        'SELECT g.id, u.username,'
+        ' player_id, created, play_date, adventure_name, adventure_code, session_number, gm_name, gm_dci,'
+        ' experience, tier1_ap, tier2_ap, tier3_ap, tier4_ap,'
+        ' gold, magic_count, tier1_tp, tier2_tp, tier3_tp, tier4_tp,'
+        ' renown, downtime,'
+        ' story_awards, acquired_items, removed_items, downtime_activity, notes'
+        ' FROM game g JOIN user u ON g.player_id = u.id'
+        ' WHERE g.player_id = ?'
+        ' ORDER BY created ASC',
+        (g.user['id'],)
+    ).fetchall()
+
     for session in game_sessions:
 
         totals["experience"] += __get_int(session["experience"])
@@ -167,6 +173,7 @@ def index():
         totals["downtime"] += __get_int(session["downtime"])
         totals["renown"] += __get_int(session["renown"])
 
+    totals["gold"] = "%.2f" % totals['gold']
     return render_template('game/index.html', game_sessions=game_sessions, totals=totals)
 
 
@@ -276,7 +283,7 @@ def update(id):
         gm_name = request.form['gm_name']
         gm_dci = request.form['gm_dci']
         experience = request.form['experience']
-        tier1_ap = __get_int(['tier1_ap'])
+        tier1_ap = __get_int(request.form['tier1_ap'])
         tier2_ap = 0
         tier3_ap = 0
         tier4_ap = 0

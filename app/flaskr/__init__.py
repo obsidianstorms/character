@@ -38,6 +38,11 @@ def create_app(test_config=None):
     # def index():
     #     return redirect(url_for('auth.login'))
 
+    # Blueprints - Index
+    from . import main
+    app.register_blueprint(main.bp)
+    app.add_url_rule('/', endpoint='index')
+
     # Blueprints - Auth
     from . import auth
     app.register_blueprint(auth.bp)
@@ -45,6 +50,6 @@ def create_app(test_config=None):
     # Blueprints - Game (session)
     from . import game
     app.register_blueprint(game.bp)
-    app.add_url_rule('/', endpoint='index')
+    app.add_url_rule('/game/', endpoint='index')
 
     return app

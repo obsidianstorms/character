@@ -12,5 +12,6 @@ dist
 build
 *.egg-info
 instance
+backup
 *.sqlite*
 

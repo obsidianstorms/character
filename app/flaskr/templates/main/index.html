@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Game Sessions{% endblock %}</h1>
+{% if g.user %}
+{% endif %}
+{% endblock %}
+
+{% block content %}
+    {% if g.user %}
+        <div class="menu">
+            <ul>
+                <li>
+                    <a href="{{ url_for('game.index') }}">Game Sessions</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('index.export') }}">Export</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('index.load') }}">Import</a>
+                </li>
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}

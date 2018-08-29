@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS post;
+DROP TABLE IF EXISTS game;
 
 CREATE TABLE user (
   id integer PRIMARY KEY AUTOINCREMENT,
@@ -18,10 +18,7 @@ CREATE TABLE game (
   gm_name TEXT NOT NULL,
   gm_dci TEXT NOT NULL,
   experience INTEGER NOT NULL,
-  tier1_ap INTEGER NOT NULL,
-  tier2_ap INTEGER NOT NULL,
-  tier3_ap INTEGER NOT NULL,
-  tier4_ap INTEGER NOT NULL,
+  ap INTEGER NOT NULL,
   gold FLOAT NOT NULL,
   magic_count INTEGER NOT NULL,
   tier1_tp INTEGER NOT NULL,
@@ -36,5 +33,12 @@ CREATE TABLE game (
   downtime_activity TEXT NOT NULL,
   notes TEXT NOT NULL,
   FOREIGN KEY (player_id) references user (id)
+);
+
+CREATE TABLE bag (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  character_id INTEGER NOT NULL,
+  contents TEXT NOT NULL,
+  FOREIGN KEY (character_id) references user (id)
 );
 
